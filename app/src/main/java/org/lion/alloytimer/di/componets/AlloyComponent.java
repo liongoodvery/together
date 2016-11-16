@@ -1,9 +1,7 @@
 package org.lion.alloytimer.di.componets;
 
-import android.os.CountDownTimer;
-
 import org.lion.alloytimer.di.modules.AlloyModule;
-import org.lion.alloytimer.ui.AlloyActivity;
+import org.lion.alloytimer.ui.AlloyFragment;
 
 import dagger.Component;
 
@@ -12,5 +10,5 @@ import dagger.Component;
  */
 @Component(modules = {AlloyModule.class})
 public interface AlloyComponent {
-    void inject(AlloyActivity activity);
+    void inject(AlloyFragment activity);
 }

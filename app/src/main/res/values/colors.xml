@@ -4,14 +4,14 @@
     <color name="colorPrimaryDark">@color/primary_dark</color>
     <color name="colorPrimaryLight">@color/primary_light</color>
     <color name="colorAccent">@color/accent</color>
-    <color name="Orange">#ff5722</color>
-    <color name="DeepPurple">#673AB7</color>
-    <color name="DeepPurple900">#311B92</color>
-    <color name="White">#ffffff</color>
-    <color name="Black">#000000</color>
-    <color name="Gray">#888888</color>
-    <color name="Gray100">#dddddd</color>
-    <color name="Gray600">#999999</color>
+    <color name="orange">#ff5722</color>
+    <color name="deepPurple">#673AB7</color>
+    <color name="deepPurple900">#311B92</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="gray">#888888</color>
+    <color name="gray100">#dddddd</color>
+    <color name="gray600">#999999</color>
 
     <color name="primary">#009688</color>
     <color name="primary_dark">#00796B</color>

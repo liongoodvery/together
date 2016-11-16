@@ -1,7 +1,11 @@
 package org.lion.alloytimer.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.lion.alloytimer.R;
 import org.lion.alloytimer.callback.AlloyCallback;
@@ -19,13 +23,20 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AlloyActivity extends AppCompatActivity implements AlloyCallback, ClockControllerViewCallback {
+/**
+ * Created by lion on 11/16/16.
+ */
+
+public class AlloyFragment extends BaseFragment implements AlloyCallback, ClockControllerViewCallback {
 
     @BindView(R.id.cv_alloy)
     ClockView mCvAlloy;
-
     @BindView(R.id.ccv_controller)
     ClockControllerView mCcvController;
+    @BindView(R.id.toolbar_title)
+    TextView mToolbarTitle;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Inject
     ClockHandler mHandler;
@@ -33,29 +44,53 @@ public class AlloyActivity extends AppCompatActivity implements AlloyCallback, C
     private AlloyComponent mAlloyComponent;
     private int VIBRATE_MILIS;
 
+    //========================================BaseFragment========================================
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alloy);
-        ButterKnife.bind(this);
-        mAlloyComponent = DaggerAlloyComponent.builder().alloyModule(new AlloyModule(mCvAlloy)).build();
-        mAlloyComponent.inject(this);
-        init();
+    protected void setToolBar() {
+        ((MainActivity)getActivity()).initDrawer(mToolbar);
     }
 
-    private void init() {
+    @Override
+    protected void refreshData() {
+
+    }
+
+    @Override
+    public int getContentLayout() {
+        return R.layout.fragment_alloy;
+    }
+
+    @Override
+    public void setContentView() {
         mCvAlloy.setAlloyCallback(this);
         mCcvController.setmCallBack(this);
-        VIBRATE_MILIS = 300;
+
     }
 
     @Override
-    protected void onDestroy() {
+    protected void initArguments(Bundle arguments) {
+
+    }
+
+    @Override
+    protected void initCustomData(Bundle savedInstanceState) {
+        VIBRATE_MILIS = 300;
+
+    }
+
+    @Override
+    public void onDestroy() {
         mHandler.removeMessages(ClockHandler.CLOCK_TICK);
         super.onDestroy();
     }
 
-    //================================AlloyCallback======================================
+    @Override
+    protected void inject() {
+        mAlloyComponent = DaggerAlloyComponent.builder().alloyModule(new AlloyModule(mCvAlloy)).build();
+        mAlloyComponent.inject(this);
+    }
+
+    //========================================AlloyCallback========================================
     @Override
     public void onWork() {
         AlloyUtils.StartVibrate(VIBRATE_MILIS);
@@ -66,7 +101,7 @@ public class AlloyActivity extends AppCompatActivity implements AlloyCallback, C
         AlloyUtils.StartVibrate(new long[]{1000, 2000, 1000, 2000}, -1);
     }
 
-    //================================ClockControllerViewCallback==============================
+    //========================================ClockControllerViewCallback===========================
     @Override
     public void onClockStart() {
         onWork();
