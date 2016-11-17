@@ -5,4 +5,5 @@ package org.lion.alloytimer.presenter;
  */
 
 public interface GistPresenter {
+    void fetchGists();
 }

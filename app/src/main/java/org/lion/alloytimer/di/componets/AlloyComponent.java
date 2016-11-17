@@ -10,5 +10,5 @@ import dagger.Component;
  */
 @Component(modules = {AlloyModule.class})
 public interface AlloyComponent {
-    void inject(AlloyFragment activity);
+    void inject(AlloyFragment fragment);
 }
