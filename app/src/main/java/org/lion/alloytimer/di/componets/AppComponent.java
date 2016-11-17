@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 
 import org.lion.alloytimer.di.modules.AppModule;
+import org.lion.alloytimer.http.GistApi;
 
 import javax.inject.Singleton;
 
@@ -19,4 +20,5 @@ public interface AppComponent {
     Context getContext();
     Handler getHandler();
     Vibrator getVibrator();
+    GistApi getGistApi();
 }

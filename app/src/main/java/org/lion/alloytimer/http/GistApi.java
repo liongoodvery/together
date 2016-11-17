@@ -1,7 +1,7 @@
 package org.lion.alloytimer.http;
 
 
-import org.lion.alloytimer.module.Gist;
+import org.lion.alloytimer.model.Gist;
 
 import java.util.List;
 

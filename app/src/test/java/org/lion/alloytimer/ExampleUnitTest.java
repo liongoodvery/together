@@ -3,7 +3,7 @@ package org.lion.alloytimer;
 import org.junit.Test;
 import org.lion.alloytimer.config.C;
 import org.lion.alloytimer.http.GistApi;
-import org.lion.alloytimer.module.Gist;
+import org.lion.alloytimer.model.Gist;
 
 import java.util.List;
 

@@ -4,13 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.lion.alloytimer.R;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     protected View mRootView;  //该Fragment的根View
     protected boolean mShowed; //该Fragment是否显示过
@@ -31,9 +38,11 @@ public abstract class BaseFragment extends Fragment {
         //如果RootView已经存在,则不再创建
         if (null == mRootView) {
             mRootView = inflater.inflate(getContentLayout(), container, false);
-            ButterKnife.bind(this,mRootView);
+            ButterKnife.bind(this, mRootView);
             inject();
-            setToolBar();
+            if (mToolbar!=null){
+                setToolBar();
+            }
             setContentView();//setContentView中只能进行静态数据与事件的初始化 获取网络数据应在refreshData中进行
         }
 
@@ -78,12 +87,6 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
-
-
-    /**
-     * 设置Fragment头布局
-     */
-    protected abstract void setToolBar();
 
 
     /**
@@ -136,4 +139,7 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+    protected void setToolBar() {
+        ((Drawer) getActivity()).initDrawer(mToolbar);
+    }
 }

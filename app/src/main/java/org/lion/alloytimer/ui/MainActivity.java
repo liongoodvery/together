@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,Drawer {
 
 
     @BindView(R.id.containner)
@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_alloy) {
-            // Handle the camera action
+            switchContent(new AlloyFragment());
         } else if (id == R.id.nav_gist) {
+            switchContent(new GistFragment());
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity
         invalidateOptionsMenu();
     }
 
-
+    @Override
     public void initDrawer(Toolbar toolbar) {
         if (toolbar != null) {
             mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close) {
