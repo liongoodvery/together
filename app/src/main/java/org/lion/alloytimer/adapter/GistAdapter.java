@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import org.lion.alloytimer.R;
 import org.lion.alloytimer.model.Gist;
+import org.lion.alloytimer.utils.AlloyUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,9 +19,11 @@ import java.util.List;
 
 public class GistAdapter extends RecyclerView.Adapter<GistHolder> {
 
-    private List<Gist> mGists;
+    private final List<Gist> mGists;
 
-    public GistAdapter(List<Gist> gists) {
+
+    public GistAdapter(Collection<Gist> gists) {
+        super();
         mGists = new ArrayList<>();
         mGists.addAll(gists);
     }
@@ -33,11 +37,15 @@ public class GistAdapter extends RecyclerView.Adapter<GistHolder> {
     public void onBindViewHolder(GistHolder holder, int position) {
 
         Gist gist = mGists.get(position);
-        if (TextUtils.isEmpty(gist.description)){
+        if (TextUtils.isEmpty(gist.description)) {
             holder.mTvGistDesc.setText("Default");
-        }else {
+        } else {
             holder.mTvGistDesc.setText(gist.description);
         }
+        if (null != gist.owner) {
+            AlloyUtils.setImageUrl(holder.mSdvAvatar, gist.owner.avatar_url);
+        }
+        holder.mTvGistTime.setText(gist.created_at);
     }
 
     @Override
@@ -45,7 +53,7 @@ public class GistAdapter extends RecyclerView.Adapter<GistHolder> {
         return mGists.size();
     }
 
-    public void update(List<Gist> gists) {
+    public void update(Collection<Gist> gists) {
         mGists.clear();
         mGists.addAll(gists);
         notifyDataSetChanged();

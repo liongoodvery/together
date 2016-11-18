@@ -30,23 +30,19 @@ public class ClockControllerView extends FrameLayout {
     private ClockControllerViewCallback mCallBack;
 
     public ClockControllerView(Context context) {
-        this(context, null, 0, 0);
+        this(context, null, 0);
     }
 
     public ClockControllerView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0, 0);
+        this(context, attrs, 0);
     }
 
     public ClockControllerView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr);
     }
 
-    public ClockControllerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_clock_controller, null);
         ButterKnife.bind(this, view);
         addView(view);

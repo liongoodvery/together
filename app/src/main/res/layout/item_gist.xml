@@ -1,11 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:layout_height="96dp"
+              android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_gist_desc"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_avatar"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:padding="@dimen/dp6"
+        fresco:placeholderImage="@drawable/ic_highlight"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_gist_desc"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_title"/>
+
+        <TextView
+            android:id="@+id/tv_gist_file"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_body"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_gist_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/tag_gist_lang"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_caption"/>
+
+            <org.lion.alloytimer.widget.TagView
+                android:id="@+id/tag_gist_lang"
+                android:layout_width="@dimen/dp90"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_caption"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
 </LinearLayout>

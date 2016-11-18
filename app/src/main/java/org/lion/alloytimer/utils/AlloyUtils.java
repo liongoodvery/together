@@ -1,5 +1,9 @@
 package org.lion.alloytimer.utils;
 
+import android.text.TextUtils;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+
 import org.lion.alloytimer.App;
 
 /**
@@ -23,6 +27,12 @@ public class AlloyUtils {
     }
     public static void stopVibrate(long[] pattern, int repeat) {
         App.getAppComponent().getVibrator().cancel();
+    }
+    public static void setImageUrl(SimpleDraweeView draweeView , String url){
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        draweeView.setImageURI(url);
     }
 }
 

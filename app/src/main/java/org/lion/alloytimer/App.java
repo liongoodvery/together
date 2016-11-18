@@ -3,6 +3,7 @@ package org.lion.alloytimer;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.Logger;
 
 import org.lion.alloytimer.config.C;
@@ -23,6 +24,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         initLogger();
+        Fresco.initialize(this);
         mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         sContext = this;
     }

@@ -2,6 +2,8 @@ package org.lion.alloytimer.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Map;
+
 /**
  * Created by lion on 2016-11-16
  */
@@ -44,5 +46,5 @@ public class Gist {
     public String comments_url;
     public Owner owner;
     public boolean truncated;
-    public Object files;
+    public Map files;
 }

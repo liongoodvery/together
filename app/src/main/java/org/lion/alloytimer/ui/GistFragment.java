@@ -1,10 +1,10 @@
 package org.lion.alloytimer.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import com.orhanobut.logger.Logger;
 
 import org.lion.alloytimer.R;
 import org.lion.alloytimer.adapter.GistAdapter;
@@ -26,12 +26,19 @@ import butterknife.BindView;
 public class GistFragment extends BaseFragment implements GistView {
     @BindView(R.id.rv_gist)
     RecyclerView mRvGist;
+    @BindView(R.id.srl_gist)
+    SwipeRefreshLayout mSrlGist;
+
+
     @Inject
     GistPresenter mGistPresenter;
+    @BindView(R.id.abl_gist)
+    AppBarLayout mAblGist;
     private GistAdapter mGistAdapter;
 
     @Override
     protected void refreshData() {
+        mSrlGist.setRefreshing(true);
         mGistPresenter.fetchGists();
     }
 
@@ -42,6 +49,7 @@ public class GistFragment extends BaseFragment implements GistView {
 
     @Override
     public void setContentView() {
+        mSrlGist.setOnRefreshListener(this::refreshData);
     }
 
     @Override
@@ -53,13 +61,17 @@ public class GistFragment extends BaseFragment implements GistView {
     protected void inject() {
         super.inject();
         DaggerGistComponent.builder()
-                .gistModule(new GistModule(this)).build().inject(this);
+                           .gistModule(new GistModule(this))
+                           .build()
+                           .inject(this);
     }
 
     @Override
     public void onFetchSuccess(List<Gist> gists) {
-        Logger.i("onNext" + "");
-        if (mGistAdapter == null) {
+        if (mSrlGist.isRefreshing()) {
+            mSrlGist.setRefreshing(false);
+        }
+        if (null == mGistAdapter) {
             mGistAdapter = new GistAdapter(gists);
             RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
             mRvGist.setLayoutManager(manager);
@@ -71,6 +83,8 @@ public class GistFragment extends BaseFragment implements GistView {
 
     @Override
     public void onFetchFailed() {
-        Logger.i("onError" + "");
+        if (mSrlGist.isRefreshing()) {
+            mSrlGist.setRefreshing(false);
+        }
     }
 }
