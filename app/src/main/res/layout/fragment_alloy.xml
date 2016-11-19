@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.lion.alloytimer.ui.MainActivity">
+    tools:context="org.lion.together.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -35,14 +35,14 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <org.lion.alloytimer.widget.ClockView
+        <org.lion.together.widget.ClockView
             android:id="@+id/cv_alloy"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:padding="20dp"/>
 
-        <org.lion.alloytimer.widget.ClockControllerView
+        <org.lion.together.widget.ClockControllerView
             android:id="@+id/ccv_controller"
             android:layout_width="match_parent"
             android:layout_height="80dp"

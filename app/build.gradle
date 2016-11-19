@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
     defaultConfig {
-        applicationId "org.lion.alloytimer"
+        applicationId "org.lion.together"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
@@ -13,8 +13,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro',\
+             'proguard-fresco.pro'
         }
     }
     compileOptions {
@@ -44,4 +45,5 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     compile "com.android.support:design:24.+"
     compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'com.artemzin.rxjava:proguard-rules:1.2.2.0'
 }
