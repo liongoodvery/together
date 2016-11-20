@@ -1,5 +1,7 @@
 package org.lion.together.ui;
 
+import android.content.Context;
+
 import org.lion.together.model.Gist;
 
 import java.util.List;
@@ -12,4 +14,8 @@ public interface GistView {
     void onFetchSuccess(List<Gist> gists);
 
     void onFetchFailed();
+
+    Context getContext();
+
+    void onVerifyTokenResponce(boolean success,String token);
 }

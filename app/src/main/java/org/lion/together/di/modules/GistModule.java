@@ -1,8 +1,16 @@
 package org.lion.together.di.modules;
 
+import android.app.Dialog;
+
+import com.blankj.utilcode.utils.SPUtils;
+
+import org.lion.together.App;
+import org.lion.together.R;
+import org.lion.together.config.C;
 import org.lion.together.presenter.GistPresenter;
 import org.lion.together.presenter.GistPresenterImpl;
 import org.lion.together.ui.GistView;
+import org.lion.together.widget.CustomDialog;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,14 +20,25 @@ import dagger.Provides;
  */
 @Module
 public class GistModule {
-    private GistView gistView;
+    private final GistView mGistView;
 
     public GistModule(GistView gistView) {
-        this.gistView = gistView;
+        this.mGistView = gistView;
     }
 
     @Provides
     public GistPresenter provideGistPresenter() {
-        return new GistPresenterImpl(gistView);
+        return new GistPresenterImpl(mGistView);
     }
+
+    @Provides
+    public SPUtils provideSputils(){
+        return new SPUtils(App.sContext, C.GIST_SP_NAME);
+    }
+
+    @Provides
+    public Dialog provideDialog(){
+        return new CustomDialog(mGistView.getContext(),R.layout.dialog_gist_token);
+    }
+
 }
