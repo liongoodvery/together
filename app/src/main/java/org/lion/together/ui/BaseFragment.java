@@ -29,6 +29,7 @@ public abstract class BaseFragment extends Fragment {
         //处理传给该Fargment的初始化数据
         initArguments(getArguments());
         initCustomData(savedInstanceState);
+
     }
 
 
@@ -42,6 +43,8 @@ public abstract class BaseFragment extends Fragment {
             inject();
             if (mToolbar!=null){
                 setToolBar();
+                setHasOptionsMenu(true);
+                mToolbar.inflateMenu(R.menu.main2);
             }
             setContentView();//setContentView中只能进行静态数据与事件的初始化 获取网络数据应在refreshData中进行
         }
