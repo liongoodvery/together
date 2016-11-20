@@ -45,4 +45,9 @@ public class ExampleUnitTest {
 
         System.in.read();
     }
+
+    @Test
+    public void test50() throws Exception {
+        System.out.println("8a0090cbc46bc4e4cff06f6e8ac70fea7e773756".length());
+    }
 }

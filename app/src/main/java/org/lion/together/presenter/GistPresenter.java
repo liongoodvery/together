@@ -5,5 +5,7 @@ package org.lion.together.presenter;
  */
 
 public interface GistPresenter {
-    void fetchGists();
+    void fetchGists(String access_token);
+
+    void verifyToken(String token);
 }
