@@ -1,6 +1,5 @@
 package org.lion.together.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -9,23 +8,17 @@ import org.lion.together.R;
 import org.lion.together.model.Gist;
 import org.lion.together.utils.AlloyUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
+import rx.Observable;
 
 /**
  * Created by lion on 11/17/16.
  */
 
-public class GistAdapter extends RecyclerView.Adapter<GistHolder> {
-
-    private final List<Gist> mGists;
-
-
+public class GistAdapter extends BaseRecyclerAdapter<GistHolder,Gist> {
     public GistAdapter(Collection<Gist> gists) {
-        super();
-        mGists = new ArrayList<>();
-        mGists.addAll(gists);
+        super(gists);
     }
 
     @Override
@@ -36,7 +29,7 @@ public class GistAdapter extends RecyclerView.Adapter<GistHolder> {
     @Override
     public void onBindViewHolder(GistHolder holder, int position) {
 
-        Gist gist = mGists.get(position);
+        Gist gist = mDatas.get(position);
         if (TextUtils.isEmpty(gist.description)) {
             holder.mTvGistDesc.setText("Default");
         } else {
@@ -45,17 +38,18 @@ public class GistAdapter extends RecyclerView.Adapter<GistHolder> {
         if (null != gist.owner) {
             AlloyUtils.setImageUrl(holder.mSdvAvatar, gist.owner.avatar_url);
         }
+        if (null != gist.files) {
+            StringBuilder sb = new StringBuilder();
+            Observable.from(gist.files.keySet())
+                      .reduce((s, s2) -> new StringBuilder().append(s).append(" ").append(s2).toString())
+                      .doOnNext(holder.mTvGistFile::setText)
+                      .subscribe();
+            Observable.from(gist.files.values())
+                      .first()
+                      .map(gistFile -> gistFile.language)
+                      .doOnNext(holder.mTagGistLang::setText)
+                      .subscribe();
+        }
         holder.mTvGistTime.setText(gist.created_at);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mGists.size();
-    }
-
-    public void update(Collection<Gist> gists) {
-        mGists.clear();
-        mGists.addAll(gists);
-        notifyDataSetChanged();
     }
 }

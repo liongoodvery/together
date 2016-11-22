@@ -17,6 +17,7 @@ import com.blankj.utilcode.utils.ToastUtils;
 
 import org.lion.together.R;
 import org.lion.together.adapter.GistAdapter;
+import org.lion.together.adapter.RecyclerItemClickListener;
 import org.lion.together.config.C;
 import org.lion.together.di.componets.DaggerGistComponent;
 import org.lion.together.di.modules.GistModule;
@@ -35,7 +36,7 @@ import butterknife.BindView;
  * Created by lion on 2016-11-16
  */
 
-public class GistFragment extends BaseFragment implements GistView, View.OnClickListener {
+public class GistFragment extends BaseFragment implements GistView, View.OnClickListener, RecyclerItemClickListener.OnItemClickListener {
     @BindView(R.id.rv_gist)
     RecyclerView mRvGist;
     @BindView(R.id.srl_gist)
@@ -54,6 +55,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     private GistAdapter mGistAdapter;
     private EditText mEt_dialog_token;
     private String mToken;
+    private List<Gist> mGists;
 
     @Override
     protected void refreshData() {
@@ -78,6 +80,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
             mToken = token;
         }
         mSrlGist.setOnRefreshListener(this::refreshData);
+        mRvGist.addOnItemTouchListener( new RecyclerItemClickListener(getContext(),mRvGist,this));
     }
 
     @Override
@@ -100,6 +103,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
 
     @Override
     public void onFetchSuccess(List<Gist> gists) {
+        mGists = gists;
         if (mSrlGist.isRefreshing()) {
             mSrlGist.setRefreshing(false);
         }
@@ -156,5 +160,10 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
         } else {
             ToastUtils.showShortToast(getActivity(), "Your Token can not be verified");
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
     }
 }
