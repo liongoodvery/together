@@ -46,5 +46,5 @@ public class Gist {
     public String comments_url;
     public Owner owner;
     public boolean truncated;
-    public Map files;
+    public Map<String,GistFile> files;
 }

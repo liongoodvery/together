@@ -40,13 +40,13 @@ public class GistPresenterImpl implements GistPresenter {
                 mGistView.onFetchSuccess(gists);
             }
         };
-        if (TextUtils.isEmpty(access_token)){
+        if (!TextUtils.isEmpty(access_token)) {
             WebService.gistApi()
                     .getGistsByToken(access_token)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
-        }else {
+        } else {
             WebService.gistApi()
                     .getAllGists()
                     .subscribeOn(Schedulers.io())
@@ -61,15 +61,15 @@ public class GistPresenterImpl implements GistPresenter {
             @Override
             public void onError(Throwable e) {
                 Logger.i("onError " + e.getMessage());
-                mGistView.onVerifyTokenResponce(false,token);
+                mGistView.onVerifyTokenResponce(false, token);
             }
 
             @Override
             public void onNext(TokenVerifyResponce responce) {
-                if (TextUtils.isEmpty(responce.message)){
-                    mGistView.onVerifyTokenResponce(true,token);
-                }else {
-                    mGistView.onVerifyTokenResponce(false,token);
+                if (TextUtils.isEmpty(responce.message)) {
+                    mGistView.onVerifyTokenResponce(true, token);
+                } else {
+                    mGistView.onVerifyTokenResponce(false, token);
                 }
             }
         };

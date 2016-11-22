@@ -26,7 +26,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:textSize="@dimen/sp_title"/>
+            android:textSize="@dimen/sp_subhead"/>
 
         <TextView
             android:id="@+id/tv_gist_file"

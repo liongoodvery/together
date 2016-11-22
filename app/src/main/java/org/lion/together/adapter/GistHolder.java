@@ -1,6 +1,5 @@
 package org.lion.together.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,13 +9,12 @@ import org.lion.together.R;
 import org.lion.together.widget.TagView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by lion on 11/17/16.
  */
 
-public class GistHolder extends RecyclerView.ViewHolder {
+public class GistHolder extends BaseRecyclerVH {
 
     @BindView(R.id.sdv_avatar)
     SimpleDraweeView mSdvAvatar;
@@ -31,6 +29,5 @@ public class GistHolder extends RecyclerView.ViewHolder {
 
     public GistHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
     }
 }

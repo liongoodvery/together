@@ -99,4 +99,13 @@ public class TagView extends View {
         int baseline = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;
         canvas.drawText(text, mWidth / 2 - bounds.width() / 2, baseline, paint);
     }
+
+    public void setText(String text) {
+        if (text == null){
+            mText = "DEFAULT";
+        }else {
+            mText = text;
+        }
+        invalidate();
+    }
 }
