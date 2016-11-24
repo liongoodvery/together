@@ -38,6 +38,15 @@
     <dimen name="dp70">70dp</dimen>
     <dimen name="dp80">80dp</dimen>
     <dimen name="dp90">90dp</dimen>
+    <dimen name="dp100">100dp</dimen>
+    <dimen name="dp120">120dp</dimen>
+    <dimen name="dp160">160dp</dimen>
+    <dimen name="dp200">200dp</dimen>
+    <dimen name="dp240">240dp</dimen>
+    <dimen name="dp250">250dp</dimen>
+    <dimen name="dp280">280dp</dimen>
+    <dimen name="dp300">300dp</dimen>
+    <dimen name="dp320">320dp</dimen>
 
     <dimen name="sp_button">14sp</dimen>
     <dimen name="sp_menu">14sp</dimen>

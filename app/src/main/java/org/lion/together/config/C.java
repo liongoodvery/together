@@ -9,4 +9,8 @@ public class C {
     public static final String GIST_SP_NAME = "GIST_SP_NAME";
     public static final String GIST_TOKEN_REGEX = "[0-9a-z]{40}";
 
+    public static final String GIST_HTML_URL = "GIST_HTML_URL";
+    public static final String GIST_SINGLE_GIST = "GIST_SINGLE_GIST";
+    public static final String GIST_OWNER = "GIST_OWNER";
+    public static final String GIST_ID = "GIST_ID";
 }

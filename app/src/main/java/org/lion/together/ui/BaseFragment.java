@@ -2,10 +2,12 @@ package org.lion.together.ui;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,7 +16,7 @@ import org.lion.together.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -41,15 +43,23 @@ public abstract class BaseFragment extends Fragment {
             mRootView = inflater.inflate(getContentLayout(), container, false);
             ButterKnife.bind(this, mRootView);
             inject();
-            if (mToolbar!=null){
+            if (mToolbar != null) {
                 setToolBar();
-                setHasOptionsMenu(true);
-                mToolbar.inflateMenu(R.menu.main2);
+                if (getMenuRes()!=0){
+                    setHasOptionsMenu(true);
+                    mToolbar.inflateMenu(getMenuRes());
+                    mToolbar.setOnMenuItemClickListener(this);
+                }
+
             }
             setContentView();//setContentView中只能进行静态数据与事件的初始化 获取网络数据应在refreshData中进行
         }
 
         return mRootView;
+    }
+    @MenuRes
+    protected  int getMenuRes(){
+        return 0;
     }
 
     protected void inject() {
@@ -57,8 +67,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //当该Fragment重新显示时是否重新获取数据
         if (!mShowed || shouldRefrsh()) {
             refreshData();
@@ -93,12 +102,12 @@ public abstract class BaseFragment extends Fragment {
 
 
     /**
-     * 控制Fragment重新显示时是否重新刷新数据 默认为true
+     * 控制Fragment重新显示时是否重新刷新数据 默认为false
      *
      * @return 返回true 则刷新数据
      */
     protected boolean shouldRefrsh() {
-        return true;
+        return false;
     }
 
     /**
@@ -134,9 +143,6 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    public boolean isVisibleToolbar() {
-        return false;
-    }
 
     protected void initCustomData(Bundle savedInstanceState) {
 
@@ -144,5 +150,10 @@ public abstract class BaseFragment extends Fragment {
 
     protected void setToolBar() {
         ((Drawer) getActivity()).initDrawer(mToolbar);
+    }
+
+    @Override
+    public  boolean onMenuItemClick(MenuItem item) {
+        return false;
     }
 }

@@ -22,7 +22,7 @@
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
             android:src="@drawable/ic_help_outline"
-            android:layout_alignParentRight="true"            />
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
     <EditText
@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
         android:hint="Your Token"
+        android:text="852c8150201f47f3b846351b9938703057ee1618"
         android:inputType="text" />
 
     <LinearLayout
