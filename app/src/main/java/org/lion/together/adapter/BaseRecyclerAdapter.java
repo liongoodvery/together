@@ -28,6 +28,7 @@ public abstract class BaseRecyclerAdapter<VH extends BaseRecyclerVH, T> extends 
         notifyDataSetChanged();
     }
 
+
     @Override
     public int getItemCount() {
         return mDatas.size();

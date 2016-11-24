@@ -45,7 +45,7 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
             inject();
             if (mToolbar != null) {
                 setToolBar();
-                if (getMenuRes()!=0){
+                if (getMenuRes() != 0) {
                     setHasOptionsMenu(true);
                     mToolbar.inflateMenu(getMenuRes());
                     mToolbar.setOnMenuItemClickListener(this);
@@ -57,8 +57,9 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
 
         return mRootView;
     }
+
     @MenuRes
-    protected  int getMenuRes(){
+    protected int getMenuRes() {
         return 0;
     }
 
@@ -153,7 +154,7 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
     }
 
     @Override
-    public  boolean onMenuItemClick(MenuItem item) {
+    public boolean onMenuItemClick(MenuItem item) {
         return false;
     }
 }

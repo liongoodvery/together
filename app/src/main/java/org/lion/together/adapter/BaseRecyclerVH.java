@@ -1,6 +1,8 @@
 package org.lion.together.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import butterknife.ButterKnife;
@@ -16,5 +18,9 @@ public abstract class BaseRecyclerVH extends RecyclerView.ViewHolder {
         super(itemView);
         mItemView = itemView;
         ButterKnife.bind(this, itemView);
+    }
+
+    public BaseRecyclerVH(Context context,int layoutRes) {
+        this(LayoutInflater.from(context).inflate(layoutRes,null));
     }
 }

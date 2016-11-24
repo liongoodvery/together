@@ -17,12 +17,13 @@
             android:text="Your GitHub Token"
             android:textColor="@color/orange"
             android:textSize="@dimen/sp_title" />
+
         <ImageView
-            android:padding="@dimen/common_padding_small"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
-            android:src="@drawable/ic_help_outline"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/common_padding_small"
+            android:src="@drawable/ic_help_outline" />
     </RelativeLayout>
 
     <EditText
@@ -30,8 +31,20 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
         android:hint="Your Token"
-        android:text="852c8150201f47f3b846351b9938703057ee1618"
-        android:inputType="text" />
+        android:inputType="text"
+        android:text="@string/my_gist_token_for_debug" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_not_show_again"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/not_show_again" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

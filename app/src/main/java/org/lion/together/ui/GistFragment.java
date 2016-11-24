@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.blankj.utilcode.utils.SPUtils;
@@ -98,7 +99,8 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     @Override
     public void setContentView() {
         String token = mSPUtils.getString(C.SP_GITHUB_TOKEN);
-        if (null == token) {
+        boolean not_show_again = mSPUtils.getBoolean(C.NOT_SHOW_AGAIN, false);
+        if (!not_show_again && (null == token)) {
             showTokenDialog();
         } else {
             mToken = token;
@@ -111,6 +113,10 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
         mEt_dialog_token = (EditText) mDialog.findViewById(R.id.et_dialog_token);
         mDialog.findViewById(R.id.bt_gist_confirm).setOnClickListener(this);
         mDialog.findViewById(R.id.bt_gist_cancel).setOnClickListener(this);
+        CheckBox checkBox = (CheckBox) mDialog.findViewById(R.id.cb_not_show_again);
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mSPUtils.putBoolean(C.NOT_SHOW_AGAIN, isChecked);
+        });
         mDialog.show();
     }
 
@@ -189,6 +195,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
             refreshData();
         } else {
             ToastUtils.showShortToast(getActivity(), "Your Token can not be verified");
+            mSPUtils.putString(C.SP_GITHUB_TOKEN,null);
         }
     }
 
@@ -199,7 +206,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
         }
         Gist gist = mGistAdapter.getDataAt(position);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(C.GIST_SINGLE_GIST,gist);
+        bundle.putParcelable(C.GIST_SINGLE_GIST, gist);
         GistDetailFragment fragment = new GistDetailFragment();
         fragment.setArguments(bundle);
         ((MainActivity) getActivity()).addToBackStack(fragment);
