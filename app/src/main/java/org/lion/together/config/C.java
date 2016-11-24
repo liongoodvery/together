@@ -13,4 +13,5 @@ public class C {
     public static final String GIST_SINGLE_GIST = "GIST_SINGLE_GIST";
     public static final String GIST_OWNER = "GIST_OWNER";
     public static final String GIST_ID = "GIST_ID";
+    public static final String NOT_SHOW_AGAIN = "NOT_SHOW_AGAIN";
 }

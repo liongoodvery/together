@@ -3,6 +3,7 @@ package org.lion.together.ui;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.lion.together.R;
+import org.lion.together.adapter.FileAdapter;
 import org.lion.together.config.C;
 import org.lion.together.model.Gist;
 import org.lion.together.model.GistFile;
@@ -70,12 +72,15 @@ public class GistDetailFragment extends BaseFragment implements AppBarLayout.OnO
         mAblGist.addOnOffsetChangedListener(this);
         mCollapsingToolbar.setScrimAnimationDuration(300);
         String description = mGist.description;
-        if (TextUtils.isEmpty(description)){
+        if (TextUtils.isEmpty(description)) {
             mTvDescription.setText("No Description");
-        }else {
+        } else {
             mTvDescription.setText(description);
         }
         mTvGistTime.setText(mGist.updated_at);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mRvFiles.setLayoutManager(layoutManager);
+        mRvFiles.setAdapter(new FileAdapter( mFiles.values()));
     }
 
     @Override

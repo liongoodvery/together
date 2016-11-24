@@ -13,4 +13,6 @@
     <string name="string_limit">"%1$d Character Limits"</string>
     <string name="action_show_all_gist">Show All</string>
     <string name="action_token">Only Me</string>
+    <string name="my_gist_token_for_debug">4ccc0ff5e270e2f40025b3bb94cbc6e6d2fb0c6b</string>
+    <string name="not_show_again">NOT SHOW AGAIN</string>
 </resources>
