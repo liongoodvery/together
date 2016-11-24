@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -42,7 +43,6 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     @BindView(R.id.srl_gist)
     SwipeRefreshLayout mSrlGist;
 
-
     @Inject
     GistPresenter mGistPresenter;
     @Inject
@@ -55,12 +55,39 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     private GistAdapter mGistAdapter;
     private EditText mEt_dialog_token;
     private String mToken;
-    private List<Gist> mGists;
+
+    @Override
+    protected int getMenuRes() {
+        return R.menu.gist_menu;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_show_all_gist:
+                refresh(null);
+                break;
+            case R.id.action_show_me:
+                if (TextUtils.isEmpty(mToken)) {
+                    showTokenDialog();
+                } else {
+                    refresh(mToken);
+                }
+                break;
+        }
+        return super.onMenuItemClick(item);
+    }
+
+
+    private void refresh(String token) {
+        mSrlGist.post(() -> mSrlGist.setRefreshing(true));
+        mGistPresenter.fetchGists(token);
+    }
+
 
     @Override
     protected void refreshData() {
-        mSrlGist.setRefreshing(true);
-        mGistPresenter.fetchGists(mToken);
+        refresh(mToken);
     }
 
     @Override
@@ -72,15 +99,19 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     public void setContentView() {
         String token = mSPUtils.getString(C.SP_GITHUB_TOKEN);
         if (null == token) {
-            mEt_dialog_token = (EditText) mDialog.findViewById(R.id.et_dialog_token);
-            mDialog.findViewById(R.id.bt_gist_confirm).setOnClickListener(this);
-            mDialog.findViewById(R.id.bt_gist_cancel).setOnClickListener(this);
-            mDialog.show();
-        }else {
+            showTokenDialog();
+        } else {
             mToken = token;
         }
         mSrlGist.setOnRefreshListener(this::refreshData);
-        mRvGist.addOnItemTouchListener( new RecyclerItemClickListener(getContext(),mRvGist,this));
+        mRvGist.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mRvGist, this));
+    }
+
+    private void showTokenDialog() {
+        mEt_dialog_token = (EditText) mDialog.findViewById(R.id.et_dialog_token);
+        mDialog.findViewById(R.id.bt_gist_confirm).setOnClickListener(this);
+        mDialog.findViewById(R.id.bt_gist_cancel).setOnClickListener(this);
+        mDialog.show();
     }
 
     @Override
@@ -103,7 +134,6 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
 
     @Override
     public void onFetchSuccess(List<Gist> gists) {
-        mGists = gists;
         if (mSrlGist.isRefreshing()) {
             mSrlGist.setRefreshing(false);
         }
@@ -164,6 +194,14 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
 
     @Override
     public void onItemClick(View view, int position) {
-
+        if (mGistAdapter == null) {
+            return;
+        }
+        Gist gist = mGistAdapter.getDataAt(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(C.GIST_SINGLE_GIST,gist);
+        GistDetailFragment fragment = new GistDetailFragment();
+        fragment.setArguments(bundle);
+        ((MainActivity) getActivity()).addToBackStack(fragment);
     }
 }

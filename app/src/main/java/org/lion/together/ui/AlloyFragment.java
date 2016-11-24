@@ -76,6 +76,11 @@ public class AlloyFragment extends BaseFragment implements AlloyCallback, ClockC
     }
 
     @Override
+    protected int getMenuRes() {
+        return 0;
+    }
+
+    @Override
     protected void inject() {
         mAlloyComponent = DaggerAlloyComponent.builder().alloyModule(new AlloyModule(mCvAlloy)).build();
         mAlloyComponent.inject(this);

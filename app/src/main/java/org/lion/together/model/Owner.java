@@ -1,6 +1,9 @@
 package org.lion.together.model;
 
-public class Owner {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Owner implements Parcelable{
         /**
          * login : Diane26290
          * id : 22372170
@@ -38,4 +41,62 @@ public class Owner {
         public String received_events_url;
         public String type;
         public boolean site_admin;
-    }
+
+        protected Owner(Parcel in) {
+                login = in.readString();
+                id = in.readInt();
+                avatar_url = in.readString();
+                gravatar_id = in.readString();
+                url = in.readString();
+                html_url = in.readString();
+                followers_url = in.readString();
+                following_url = in.readString();
+                gists_url = in.readString();
+                starred_url = in.readString();
+                subscriptions_url = in.readString();
+                organizations_url = in.readString();
+                repos_url = in.readString();
+                events_url = in.readString();
+                received_events_url = in.readString();
+                type = in.readString();
+                site_admin = in.readByte() != 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(login);
+                dest.writeInt(id);
+                dest.writeString(avatar_url);
+                dest.writeString(gravatar_id);
+                dest.writeString(url);
+                dest.writeString(html_url);
+                dest.writeString(followers_url);
+                dest.writeString(following_url);
+                dest.writeString(gists_url);
+                dest.writeString(starred_url);
+                dest.writeString(subscriptions_url);
+                dest.writeString(organizations_url);
+                dest.writeString(repos_url);
+                dest.writeString(events_url);
+                dest.writeString(received_events_url);
+                dest.writeString(type);
+                dest.writeByte((byte) (site_admin ? 1 : 0));
+        }
+
+        @Override
+        public int describeContents() {
+                return 0;
+        }
+
+        public static final Creator<Owner> CREATOR = new Creator<Owner>() {
+                @Override
+                public Owner createFromParcel(Parcel in) {
+                        return new Owner(in);
+                }
+
+                @Override
+                public Owner[] newArray(int size) {
+                        return new Owner[size];
+                }
+        };
+}

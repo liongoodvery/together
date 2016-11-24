@@ -7,6 +7,7 @@ import org.lion.together.model.TokenVerifyResponce;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -23,4 +24,8 @@ public interface GistApi{
 
     @GET("user")
     Observable<TokenVerifyResponce> verifyToken(@Query("access_token") String access_token);
+
+    @GET("gists/{id}")
+    Observable<List<Gist>> getGistById(@Path("id") String id);
+
 }

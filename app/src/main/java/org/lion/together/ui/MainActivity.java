@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,Drawer {
+        implements NavigationView.OnNavigationItemSelectedListener, Drawer {
 
 
     @BindView(R.id.containner)
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            switchContent(new AlloyFragment());
+            switchContent(new GistFragment());
         } else {
 
 
@@ -112,7 +111,16 @@ public class MainActivity extends AppCompatActivity
 
     public void switchContent(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.containner, fragment).commit();
+        fragmentTransaction.replace(R.id.containner, fragment)
+                .commit();
+        invalidateOptionsMenu();
+    }
+
+    public void addToBackStack(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.containner, fragment)
+                .addToBackStack(null)
+                .commit();
         invalidateOptionsMenu();
     }
 
@@ -134,4 +142,6 @@ public class MainActivity extends AppCompatActivity
             mDrawerLayout.addDrawerListener(mDrawerToggle);
         }
     }
+
+
 }

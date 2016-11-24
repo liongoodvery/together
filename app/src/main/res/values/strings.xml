@@ -11,4 +11,6 @@
     <string name="alloyclock">AlloyClock</string>
     <string name="gist">Gist</string>
     <string name="string_limit">"%1$d Character Limits"</string>
+    <string name="action_show_all_gist">Show All</string>
+    <string name="action_token">Only Me</string>
 </resources>

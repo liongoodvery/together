@@ -37,6 +37,8 @@ public class GistAdapter extends BaseRecyclerAdapter<GistHolder,Gist> {
         }
         if (null != gist.owner) {
             AlloyUtils.setImageUrl(holder.mSdvAvatar, gist.owner.avatar_url);
+        }else {
+            holder.mSdvAvatar.setImageResource(R.drawable.ic_highlight);
         }
         if (null != gist.files) {
             StringBuilder sb = new StringBuilder();
