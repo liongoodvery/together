@@ -6,10 +6,10 @@ import com.blankj.utilcode.utils.SPUtils;
 
 import org.lion.together.App;
 import org.lion.together.R;
-import org.lion.together.config.C;
-import org.lion.together.presenter.GistPresenter;
-import org.lion.together.presenter.GistPresenterImpl;
-import org.lion.together.ui.GistView;
+import org.lion.together.dev.gist.GistC;
+import org.lion.together.dev.gist.presenter.GistPresenter;
+import org.lion.together.dev.gist.presenter.GistPresenterImpl;
+import org.lion.together.dev.gist.ui.GistView;
 import org.lion.together.widget.CustomDialog;
 
 import dagger.Module;
@@ -33,7 +33,7 @@ public class GistModule {
 
     @Provides
     public SPUtils provideSputils(){
-        return new SPUtils(App.sContext, C.GIST_SP_NAME);
+        return new SPUtils(App.sContext, GistC.GIST_SP_NAME);
     }
 
     @Provides

@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
 
-import org.lion.together.config.C;
+import org.lion.together.dev.gist.GistC;
 import org.lion.together.http.GistApi;
 
 import javax.inject.Singleton;
@@ -50,7 +50,7 @@ public class AppModule {
     @Provides
     public GistApi provideGistApi(){
         return  new Retrofit.Builder()
-                .baseUrl(C.BASE_GIST_API)
+                .baseUrl(GistC.BASE_GIST_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()
