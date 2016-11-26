@@ -1,8 +1,8 @@
 package org.lion.together.http;
 
 
-import org.lion.together.model.Gist;
-import org.lion.together.model.TokenVerifyResponce;
+import org.lion.together.dev.gist.model.Gist;
+import org.lion.together.dev.gist.model.TokenVerifyResponce;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import rx.Observable;
  * Created by lion on 2016-11-16
  */
 
-public interface GistApi{
+public interface GistApi {
     @GET("gists")
     Observable<List<Gist>> getAllGists();
 

@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import org.lion.together.config.C;
+import org.lion.together.C;
 import org.lion.together.widget.ClockView;
 
 /**

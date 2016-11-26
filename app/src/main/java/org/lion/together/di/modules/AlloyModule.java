@@ -2,7 +2,7 @@ package org.lion.together.di.modules;
 
 import android.os.CountDownTimer;
 
-import org.lion.together.config.C;
+import org.lion.together.C;
 import org.lion.together.utils.ClockHandler;
 import org.lion.together.widget.ClockView;
 

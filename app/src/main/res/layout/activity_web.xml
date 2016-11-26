@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.lion.together.ui.WebActivity">
+    tools:context=".main.ui.WebActivity">
 
     <WebView
         android:id="@+id/web_view"

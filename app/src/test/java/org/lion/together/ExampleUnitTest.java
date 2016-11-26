@@ -1,9 +1,9 @@
 package org.lion.together;
 
 import org.junit.Test;
-import org.lion.together.config.C;
+import org.lion.together.dev.gist.GistC;
 import org.lion.together.http.GistApi;
-import org.lion.together.model.Gist;
+import org.lion.together.dev.gist.model.Gist;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class ExampleUnitTest {
     @Test
     public void test_getAllGists() throws Exception {
         new Retrofit.Builder()
-                .baseUrl(C.BASE_GIST_API)
+                .baseUrl(GistC.BASE_GIST_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()

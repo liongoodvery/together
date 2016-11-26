@@ -1,7 +1,7 @@
 package org.lion.together.di.componets;
 
 import org.lion.together.di.modules.AlloyModule;
-import org.lion.together.ui.AlloyFragment;
+import org.lion.together.dev.alloy.ui.AlloyFragment;
 
 import dagger.Component;
 

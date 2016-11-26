@@ -6,7 +6,6 @@ import android.content.Context;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.Logger;
 
-import org.lion.together.config.C;
 import org.lion.together.di.componets.AppComponent;
 import org.lion.together.di.componets.DaggerAppComponent;
 import org.lion.together.di.modules.AppModule;
