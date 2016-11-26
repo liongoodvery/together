@@ -3,7 +3,7 @@ package org.lion.together.di.modules;
 import android.os.CountDownTimer;
 
 import org.lion.together.C;
-import org.lion.together.utils.ClockHandler;
+import org.lion.together.dev.alloy.presenter.ClockPresenter;
 import org.lion.together.widget.ClockView;
 
 import dagger.Module;
@@ -36,8 +36,8 @@ public class AlloyModule {
     }
 
     @Provides
-    public ClockHandler provideHandler() {
-        return new ClockHandler(mClockView);
+    public ClockPresenter provideHandler() {
+        return new ClockPresenter(mClockView);
     }
 
 

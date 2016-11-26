@@ -6,11 +6,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.lion.together.App;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by lion on 11/10/16.
  */
 
-public class AlloyUtils {
+public class Utils {
     public static void runOnUiThread(Runnable r) {
         App.getAppComponent().getHandler().post(r);
     }
@@ -33,6 +37,17 @@ public class AlloyUtils {
             return;
         }
         draweeView.setImageURI(url);
+    }
+    public static Date pharseDate(String s) {
+        Date date = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            date = format.parse(s.replace("T", " ").replace("Z", ""));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+
     }
 }
 

@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import org.lion.together.R;
 import org.lion.together.dev.alloy.ui.AlloyFragment;
 import org.lion.together.dev.gist.ui.GistFragment;
+import org.lion.together.dev.todo.TodoFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,7 +89,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gist) {
             switchContent(new GistFragment());
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_todo) {
+            switchContent(new TodoFragment());
 
         } else if (id == R.id.nav_manage) {
 

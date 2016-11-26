@@ -1,17 +1,20 @@
 package org.lion.together.dev.alloy.ui;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.TextView;
+
+import com.orhanobut.logger.Logger;
 
 import org.lion.together.R;
 import org.lion.together.base.BaseFragment;
 import org.lion.together.callback.AlloyCallback;
 import org.lion.together.callback.ClockControllerViewCallback;
+import org.lion.together.dev.alloy.presenter.ClockPresenter;
 import org.lion.together.di.componets.AlloyComponent;
 import org.lion.together.di.componets.DaggerAlloyComponent;
 import org.lion.together.di.modules.AlloyModule;
-import org.lion.together.utils.AlloyUtils;
-import org.lion.together.utils.ClockHandler;
+import org.lion.together.utils.Utils;
 import org.lion.together.widget.ClockControllerView;
 import org.lion.together.widget.ClockView;
 
@@ -34,7 +37,7 @@ public class AlloyFragment extends BaseFragment implements AlloyCallback, ClockC
 
 
     @Inject
-    ClockHandler mHandler;
+    ClockPresenter mPresenter;
 
     private AlloyComponent mAlloyComponent;
     private int VIBRATE_MILIS;
@@ -56,6 +59,16 @@ public class AlloyFragment extends BaseFragment implements AlloyCallback, ClockC
     public void setContentView() {
         mCvAlloy.setAlloyCallback(this);
         mCcvController.setmCallBack(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true && !AlloyFragment.this.isDetached()) {
+                    Logger.i("");
+                    mPresenter.onTick();
+                    SystemClock.sleep(1000);
+                }
+            }
+        }).start();
 
     }
 
@@ -72,7 +85,6 @@ public class AlloyFragment extends BaseFragment implements AlloyCallback, ClockC
 
     @Override
     public void onDestroy() {
-        mHandler.removeMessages(ClockHandler.CLOCK_TICK);
         super.onDestroy();
     }
 
@@ -90,28 +102,28 @@ public class AlloyFragment extends BaseFragment implements AlloyCallback, ClockC
     //========================================AlloyCallback========================================
     @Override
     public void onWork() {
-        AlloyUtils.StartVibrate(VIBRATE_MILIS);
+        Utils.StartVibrate(VIBRATE_MILIS);
     }
 
     @Override
     public void onRest() {
-        AlloyUtils.StartVibrate(new long[]{1000, 2000, 1000, 2000}, -1);
+        Utils.StartVibrate(new long[]{1000, 2000, 1000, 2000}, -1);
     }
 
     //========================================ClockControllerViewCallback===========================
     @Override
     public void onClockStart() {
         onWork();
-        mHandler.start();
+        mPresenter.start();
     }
 
     @Override
     public void onClockPause() {
-        mHandler.pause();
+        mPresenter.pause();
     }
 
     @Override
     public void onClockStop() {
-        mHandler.stop();
+        mPresenter.stop();
     }
 }

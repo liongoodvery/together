@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import org.lion.together.R;
 import org.lion.together.base.BaseRecyclerAdapter;
 import org.lion.together.dev.gist.model.Gist;
-import org.lion.together.utils.AlloyUtils;
+import org.lion.together.utils.Utils;
 
 import java.util.Collection;
 
@@ -37,7 +37,7 @@ public class GistAdapter extends BaseRecyclerAdapter<GistHolder,Gist> {
             holder.mTvGistDesc.setText(gist.description);
         }
         if (null != gist.owner) {
-            AlloyUtils.setImageUrl(holder.mSdvAvatar, gist.owner.avatar_url);
+            Utils.setImageUrl(holder.mSdvAvatar, gist.owner.avatar_url);
         }else {
             holder.mSdvAvatar.setImageResource(R.drawable.ic_highlight);
         }

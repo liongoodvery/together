@@ -35,6 +35,8 @@ public class ClockView extends View {
     private int mRestTime;
     private float mSplitAngle;
     private float mUnitAngle;
+    private long mTotalTime;
+    private long mCurrentTime;
 
     public ClockView(Context context) {
         this(context, null, 0);
@@ -70,7 +72,9 @@ public class ClockView extends View {
 
         mWorkTime = 25 * 60 * 1000;
         mRestTime = 5 * 60 * 1000;
-        mUnitAngle = (float) (1.0 * 360 / (mWorkTime + mRestTime));
+        mTotalTime = mWorkTime + mRestTime;
+        mCurrentTime = 0;
+        mUnitAngle = (float) (1.0 * 360 / (mTotalTime));
 
         mSplitAngle = mWorkTime * mUnitAngle;
         mHeadAngle = 0;
@@ -108,23 +112,30 @@ public class ClockView extends View {
         canvas.restore();
     }
 
-    public void addTime(long milis) {
-        float angle = (milis * mUnitAngle + mHeadAngle) % 360;
+    public void setTime(long milis) {
+        mCurrentTime = milis;
+        float angle = (milis * mUnitAngle) % 360;
         if (mHeadAngle <= mSplitAngle && angle > mSplitAngle) {
             if (mAlloyCallback != null) {
                 mAlloyCallback.onRest();
             }
         }
         mHeadAngle = angle;
-        invalidate();
+        postInvalidate();
+    }
+
+    public void addTime(long milis) {
+        mCurrentTime +=milis;
+        setTime(mCurrentTime);
     }
 
     public void resetAngle() {
         mHeadAngle = 0;
+        mCurrentTime = 0;
         if (mAlloyCallback != null) {
             mAlloyCallback.onWork();
         }
-        invalidate();
+        postInvalidate();
     }
 
     public void setAlloyCallback(AlloyCallback alloyCallback) {

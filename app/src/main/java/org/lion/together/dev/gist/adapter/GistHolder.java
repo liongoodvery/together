@@ -7,7 +7,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.lion.together.R;
 import org.lion.together.base.BaseRecyclerVH;
-import org.lion.together.widget.TagView;
 
 import butterknife.BindView;
 
@@ -26,7 +25,7 @@ public class GistHolder extends BaseRecyclerVH {
     @BindView(R.id.tv_gist_time)
     TextView mTvGistTime;
     @BindView(R.id.tag_gist_lang)
-    TagView mTagGistLang;
+    TextView mTagGistLang;
 
     public GistHolder(View itemView) {
         super(itemView);

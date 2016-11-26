@@ -17,16 +17,17 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdv_avatar"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
                 android:layout_gravity="center"
                 android:padding="@dimen/dp6"
                 fresco:placeholderImage="@drawable/ic_highlight"/>
             <LinearLayout
+                android:layout_marginLeft="@dimen/common_margin_small"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -35,17 +36,17 @@
                     android:id="@+id/tv_gist_desc"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:textSize="@dimen/sp_subhead"/>
 
                 <TextView
                     android:id="@+id/tv_gist_file"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textSize="@dimen/sp_body"/>
@@ -53,7 +54,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="2">
 
                     <TextView
                         android:id="@+id/tv_gist_time"
@@ -63,12 +64,14 @@
                         android:gravity="center_vertical"
                         android:textSize="@dimen/sp_caption"/>
 
-                    <org.lion.together.widget.TagView
+                    <TextView
                         android:id="@+id/tag_gist_lang"
                         android:layout_width="@dimen/dp90"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:gravity="center_vertical"
+                        android:background="@drawable/bg_tag"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:gravity="center"
                         android:textSize="@dimen/sp_caption"/>
 
                 </RelativeLayout>
