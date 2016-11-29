@@ -12,6 +12,7 @@ import org.lion.together.utils.CommonSubscriber;
 
 import java.util.List;
 
+import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -29,10 +30,10 @@ public class GistPresenterImpl implements GistPresenter {
     @Override
     public void fetchGists(String access_token) {
         CommonSubscriber<List<Gist>> subscriber = new CommonSubscriber<List<Gist>>() {
+
             @Override
-            public void onError(Throwable e) {
-                Logger.i("onError" + "");
-                mGistView.onFetchFailed();
+            protected void doOnHttpException(HttpException httpException) {
+                mGistView.onFetchFailed(httpException.code());
             }
 
             @Override

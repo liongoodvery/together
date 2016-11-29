@@ -11,4 +11,7 @@ public class GistC {
     public static final String GIST_OWNER = "GIST_OWNER";
     public static final String GIST_ID = "GIST_ID";
     public static final String NOT_SHOW_AGAIN = "NOT_SHOW_AGAIN";
+    public static final String ACTION_SHOW_GIST = "ACTION_SHOW_GIST";
+    public static final String SHOW_ALL_GIST = "ACTION_SHOW_GIST";
+    public static final String SHOW_ONLY_ME = "SHOW_ONLY_ME";
 }

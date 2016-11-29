@@ -15,6 +15,9 @@ import org.lion.together.dev.todo.model.Todo;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by lion on 2016-11-27
@@ -48,11 +51,16 @@ public class TodoFragment extends BaseFragment {
         mRvTodo.setLayoutManager(manager);
         ArrayList<Todo> datas = new ArrayList<>();
         long l = System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
-            Todo todo = new Todo("title" + i, l + i * 1000000, l + i * 100000, l + i * 200000, i % 5, "description" + i);
-            datas.add(todo);
-        }
-        mRvTodo.setAdapter(new TodoAdapter(datas));
+        Observable.range(1, 40)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(j -> {
+                    Todo todo = new Todo("title" + j, l + j * 1000000, l + j * 100000, l + j * 200000, j % 5, "descriptjon" + j);
+                    return todo;
+                })
+                .toList()
+                .doOnNext(todos -> mRvTodo.setAdapter(new TodoAdapter(todos)))
+                .subscribe();
     }
 
     @Override

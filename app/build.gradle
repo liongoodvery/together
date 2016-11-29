@@ -51,5 +51,6 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.android.support:cardview-v7:24+'
     compile 'com.pddstudio:highlightjs-android:1.3.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.3.2'
 
 }

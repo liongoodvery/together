@@ -70,6 +70,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/bg_tag"
+                        android:maxLines="1"
                         android:textColor="@color/colorPrimaryDark"
                         android:gravity="center"
                         android:textSize="@dimen/sp_caption"/>

@@ -1,7 +1,6 @@
 package org.lion.together.utils;
 
-import com.orhanobut.logger.Logger;
-
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 
 /**
@@ -17,7 +16,15 @@ public class CommonSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        Logger.i(e.getMessage());
+        if (e instanceof HttpException){
+            doOnHttpException((HttpException)e);
+        }else {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void doOnHttpException(HttpException httpException) {
+
     }
 
     @Override
