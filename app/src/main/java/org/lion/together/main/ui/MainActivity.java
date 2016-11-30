@@ -3,9 +3,6 @@ package org.lion.together.main.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +17,7 @@ import org.lion.together.R;
 import org.lion.together.dev.alloy.ui.AlloyFragment;
 import org.lion.together.dev.gist.ui.GistFragment;
 import org.lion.together.dev.todo.ui.TodoFragment;
+import org.lion.together.utils.FragmentUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,12 +83,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_alloy) {
-            switchContent(new AlloyFragment());
+            FragmentUtils.switchContent(this, new AlloyFragment());
         } else if (id == R.id.nav_gist) {
-            switchContent(new GistFragment());
+            FragmentUtils.switchContent(this, new GistFragment());
 
         } else if (id == R.id.nav_todo) {
-            switchContent(new TodoFragment());
+            FragmentUtils.switchContent(this, new TodoFragment());
 
         } else if (id == R.id.nav_manage) {
 
@@ -107,28 +105,11 @@ public class MainActivity extends AppCompatActivity
 
     private void initFragment(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            switchContent(new TodoFragment());
+            FragmentUtils.switchContent(this, new TodoFragment());
         } else {
 
 
         }
-    }
-
-    public void switchContent(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.containner, fragment)
-                .commit();
-        invalidateOptionsMenu();
-    }
-
-    public void addToBackStack(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.containner, fragment)
-                .addToBackStack(null)
-                .commit();
-        invalidateOptionsMenu();
     }
 
     @Override

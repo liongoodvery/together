@@ -3,7 +3,7 @@ package org.lion.together.dev.todo.adapter;
 import android.view.ViewGroup;
 
 import org.lion.together.base.BaseRecyclerAdapter;
-import org.lion.together.dev.todo.model.Todo;
+import org.lion.together.dao.Todo;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;

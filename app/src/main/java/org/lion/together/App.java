@@ -16,7 +16,7 @@ import org.lion.together.di.modules.AppModule;
 
 public class App extends Application {
 
-    private static AppComponent mAppComponent;
+    private static AppComponent sAppComponent;
     public static Context sContext;
 
     @Override
@@ -24,7 +24,7 @@ public class App extends Application {
         super.onCreate();
         initLogger();
         Fresco.initialize(this);
-        mAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        sAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
         sContext = this;
     }
 
@@ -33,6 +33,6 @@ public class App extends Application {
     }
 
     public static AppComponent getAppComponent() {
-        return mAppComponent;
+        return sAppComponent;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface GistView {
     void onFetchSuccess(List<Gist> gists);
 
-    void onFetchFailed();
+    void onFetchFailed(int code);
 
     Context getContext();
 

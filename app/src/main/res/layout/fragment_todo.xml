@@ -26,23 +26,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="@string/gist"/>
+                android:text="@string/todo" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/fragment_todo_content"/>
+        layout="@layout/fragment_todo_content" />
 
     <android.support.design.widget.FloatingActionButton
-        app:layout_anchor="@id/abl"
         android:id="@+id/fab_todo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        app:fabSize="normal"
-        android:src="@drawable/ic_add"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
         android:layout_marginBottom="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp24"/>
+        android:layout_marginRight="@dimen/dp24"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorPrimary"
+        app:pressedTranslationZ="@dimen/dp48"
+        app:fabSize="normal"
+        app:layout_behavior="org.lion.together.utils.ScrollAwareFABBehavior"
+        app:rippleColor="#33728dff" />
 </android.support.design.widget.CoordinatorLayout>

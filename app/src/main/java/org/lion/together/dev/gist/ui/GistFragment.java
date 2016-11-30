@@ -17,16 +17,17 @@ import android.widget.EditText;
 import com.blankj.utilcode.utils.SPUtils;
 import com.blankj.utilcode.utils.ToastUtils;
 
+import org.apache.http.HttpStatus;
 import org.lion.together.R;
-import org.lion.together.dev.gist.adapter.GistAdapter;
-import org.lion.together.callback.RecyclerItemClickListener;
 import org.lion.together.base.BaseFragment;
+import org.lion.together.callback.RecyclerItemClickListener;
 import org.lion.together.dev.gist.GistC;
-import org.lion.together.di.componets.DaggerGistComponent;
-import org.lion.together.di.modules.GistModule;
+import org.lion.together.dev.gist.adapter.GistAdapter;
 import org.lion.together.dev.gist.model.Gist;
 import org.lion.together.dev.gist.presenter.GistPresenter;
-import org.lion.together.main.ui.MainActivity;
+import org.lion.together.di.componets.DaggerGistComponent;
+import org.lion.together.di.modules.GistModule;
+import org.lion.together.utils.FragmentUtils;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -58,6 +59,8 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     private GistAdapter mGistAdapter;
     private EditText mEt_dialog_token;
     private String mToken;
+    private String mShowType;
+    private boolean mNot_show_again;
 
     @Override
     protected int getMenuRes() {
@@ -68,9 +71,11 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_show_all_gist:
+                mSPUtils.putString(GistC.ACTION_SHOW_GIST, GistC.SHOW_ALL_GIST);
                 refresh(null);
                 break;
             case R.id.action_show_me:
+                mSPUtils.putString(GistC.ACTION_SHOW_GIST, GistC.SHOW_ONLY_ME);
                 if (TextUtils.isEmpty(mToken)) {
                     showTokenDialog();
                 } else {
@@ -90,7 +95,11 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
 
     @Override
     protected void refreshData() {
-        refresh(mToken);
+        if (TextUtils.equals(mShowType, GistC.SHOW_ALL_GIST)) {
+            refresh(null);
+        } else {
+            refresh(mToken);
+        }
     }
 
     @Override
@@ -100,13 +109,17 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
 
     @Override
     public void setContentView() {
-        String token = mSPUtils.getString(GistC.SP_GITHUB_TOKEN);
-        boolean not_show_again = mSPUtils.getBoolean(GistC.NOT_SHOW_AGAIN, false);
-        if (!not_show_again && (null == token)) {
-            showTokenDialog();
-        } else {
-            mToken = token;
+        mNot_show_again = mSPUtils.getBoolean(GistC.NOT_SHOW_AGAIN, false);
+        if (!TextUtils.equals(mShowType, GistC.SHOW_ALL_GIST)) {
+            mShowType = mSPUtils.getString(GistC.ACTION_SHOW_GIST, GistC.SHOW_ALL_GIST);
+            String token = mSPUtils.getString(GistC.SP_GITHUB_TOKEN);
+            if (!mNot_show_again && (null == token)) {
+                showTokenDialog();
+            } else {
+                mToken = token;
+            }
         }
+
         mSrlGist.setOnRefreshListener(this::refreshData);
         mRvGist.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mRvGist, this));
     }
@@ -156,7 +169,16 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     }
 
     @Override
-    public void onFetchFailed() {
+    public void onFetchFailed(int code) {
+        switch (code) {
+            case HttpStatus.SC_UNAUTHORIZED:
+                ToastUtils.showShortToast(getActivity(), "Your Token can not be verified");
+                mSPUtils.putString(GistC.SP_GITHUB_TOKEN, null);
+                if (!mNot_show_again){
+                    showTokenDialog();
+                }
+                break;
+        }
         if (mSrlGist.isRefreshing()) {
             mSrlGist.setRefreshing(false);
         }
@@ -197,7 +219,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
             refreshData();
         } else {
             ToastUtils.showShortToast(getActivity(), "Your Token can not be verified");
-            mSPUtils.putString(GistC.SP_GITHUB_TOKEN,null);
+            mSPUtils.putString(GistC.SP_GITHUB_TOKEN, null);
         }
     }
 
@@ -211,6 +233,6 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
         bundle.putParcelable(GistC.GIST_SINGLE_GIST, gist);
         GistDetailFragment fragment = new GistDetailFragment();
         fragment.setArguments(bundle);
-        ((MainActivity) getActivity()).addToBackStack(fragment);
+        FragmentUtils.addToBackStack(getActivity(),fragment);
     }
 }

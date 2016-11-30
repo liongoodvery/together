@@ -30,9 +30,8 @@
         android:id="@+id/et_dialog_token"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp48"
-        android:hint="Your Token"
-        android:inputType="text"
-        android:text="@string/my_gist_token_for_debug" />
+        android:hint="@string/your_token"
+        android:inputType="text" />
 
     <LinearLayout
         android:layout_width="match_parent"

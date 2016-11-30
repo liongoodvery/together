@@ -17,7 +17,7 @@ import rx.Observable;
  * Created by lion on 11/17/16.
  */
 
-public class GistAdapter extends BaseRecyclerAdapter<GistHolder,Gist> {
+public class GistAdapter extends BaseRecyclerAdapter<GistHolder, Gist> {
     public GistAdapter(Collection<Gist> gists) {
         super(gists);
     }
@@ -38,20 +38,20 @@ public class GistAdapter extends BaseRecyclerAdapter<GistHolder,Gist> {
         }
         if (null != gist.owner) {
             Utils.setImageUrl(holder.mSdvAvatar, gist.owner.avatar_url);
-        }else {
+        } else {
             holder.mSdvAvatar.setImageResource(R.drawable.ic_highlight);
         }
         if (null != gist.files) {
             StringBuilder sb = new StringBuilder();
             Observable.from(gist.files.keySet())
-                      .reduce((s, s2) -> new StringBuilder().append(s).append(" ").append(s2).toString())
-                      .doOnNext(holder.mTvGistFile::setText)
-                      .subscribe();
+                    .reduce((s, s2) -> new StringBuilder().append(s).append(" ").append(s2).toString())
+                    .doOnNext(holder.mTvGistFile::setText)
+                    .subscribe();
             Observable.from(gist.files.values())
-                      .first()
-                      .map(gistFile -> gistFile.language)
-                      .doOnNext(holder.mTagGistLang::setText)
-                      .subscribe();
+                    .first()
+                    .map(gistFile -> TextUtils.isEmpty(gistFile.language) ? "DEFAULT" : gistFile.language)
+            .doOnNext(holder.mTagGistLang::setText)
+                    .subscribe();
         }
         holder.mTvGistTime.setText(gist.created_at);
     }

@@ -22,6 +22,10 @@ public abstract class BaseRecyclerAdapter<VH extends BaseRecyclerVH, T> extends 
 
     public void update(Collection<T> datas) {
         mDatas.clear();
+        add(datas);
+    }
+
+    public void add(Collection<T> datas) {
         if (datas != null) {
             mDatas.addAll(datas);
         }
