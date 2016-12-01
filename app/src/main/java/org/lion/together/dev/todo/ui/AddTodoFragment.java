@@ -3,6 +3,7 @@ package org.lion.together.dev.todo.ui;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.orhanobut.logger.Logger;
 import org.lion.together.App;
 import org.lion.together.R;
 import org.lion.together.base.BaseFragment;
+import org.lion.together.base.BaseTextWatcher;
 import org.lion.together.dao.Todo;
 import org.lion.together.widget.DatePickerFragment;
 import org.lion.together.widget.TimePickerFragment;
@@ -45,6 +47,12 @@ public class AddTodoFragment extends BaseFragment implements DatePickerFragment.
     @BindView(R.id.bt_add)
     Button mBtAdd;
 
+    @BindView(R.id.til_title)
+    TextInputLayout mTilTitle;
+
+    @BindView(R.id.til_description)
+    TextInputLayout mTilDescription;
+
     @Override
     protected void refreshData() {
 
@@ -57,6 +65,16 @@ public class AddTodoFragment extends BaseFragment implements DatePickerFragment.
 
     @Override
     public void setContentView() {
+        mEtTodoTitle.addTextChangedListener(new BaseTextWatcher(){
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()<3 || s.length()>10){
+                    mTilTitle.setError("length between 3 and 10");
+                }else {
+                    mTilTitle.setErrorEnabled(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -92,6 +110,17 @@ public class AddTodoFragment extends BaseFragment implements DatePickerFragment.
                 saveTodo();
                 break;
         }
+    }
+
+    private void validateDescription() {
+        String s = mTilDescription.getEditText().getText().toString();
+        if (s.length()>20){
+            mTilTitle.setError("description too long");
+        }
+    }
+
+    private void validateTitle() {
+
     }
 
     private void saveTodo() {

@@ -15,6 +15,7 @@ import org.lion.together.dao.Todo;
 import org.lion.together.dev.todo.adapter.TodoAdapter;
 import org.lion.together.dev.todo.presenter.TodoPresenter;
 import org.lion.together.dev.todo.presenter.TodoPresenterImpl;
+import org.lion.together.utils.FragmentUtils;
 
 import java.util.Collection;
 
@@ -76,10 +77,7 @@ public class TodoFragment extends BaseFragment implements TodoView, SwipeRefresh
     @Override
     public void addTodo() {
         AddTodoFragment addTodoFragment = new AddTodoFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containner,addTodoFragment)
-                .commit();
-//        FragmentUtils.addToBackStack(getActivity(),addTodoFragment);
+        FragmentUtils.addToBackStack(getActivity(),addTodoFragment);
     }
 
     @Override
