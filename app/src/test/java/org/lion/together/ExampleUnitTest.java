@@ -5,6 +5,8 @@ import org.lion.together.dev.gist.GistC;
 import org.lion.together.http.GistApi;
 import org.lion.together.dev.gist.model.Gist;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Retrofit;
@@ -48,6 +50,8 @@ public class ExampleUnitTest {
 
     @Test
     public void test50() throws Exception {
-        System.out.println("8a0090cbc46bc4e4cff06f6e8ac70fea7e773756".length());
+        Calendar instance = Calendar.getInstance();
+        Date time = instance.getTime();
+        System.out.println(time);
     }
 }

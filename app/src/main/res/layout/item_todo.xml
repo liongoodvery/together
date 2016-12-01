@@ -58,7 +58,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_todo_descripiton"
+                android:id="@+id/et_todo_descripiton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp60"
                 android:maxLines="2"

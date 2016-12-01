@@ -20,7 +20,7 @@ public class TodoHolder extends BaseRecyclerVH {
     TextView mTvTodoTime;
     @BindView(R.id.rb_todo_rating)
     RatingBar mRbTodoRating;
-    @BindView(R.id.tv_todo_descripiton)
+    @BindView(R.id.et_todo_descripiton)
     TextView mTvTodoDescripiton;
 
     public TodoHolder(ViewGroup parent) {

@@ -70,7 +70,7 @@ public class TodoFragment extends BaseFragment implements TodoView, SwipeRefresh
     @Override
     public void doOnResponse(Collection<Todo> todos) {
         mAdapter.update(todos);
-        mSrlTodo.setRefreshing(false);
+        mSrlTodo.post(() -> mSrlTodo.setRefreshing(false));
     }
 
     @Override
