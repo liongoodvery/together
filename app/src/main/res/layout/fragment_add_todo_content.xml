@@ -22,7 +22,6 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_title"
                 android:layout_width="match_parent"
-                app:errorEnabled="true"
                 android:layout_height="wrap_content">
 
                 <EditText
@@ -33,16 +32,14 @@
                     android:hint="Title"
                     android:maxLines="1"
                     android:paddingLeft="@dimen/common_padding"
-                    android:textSize="@dimen/sp_headline" />
+                    android:textSize="@dimen/sp_title" />
             </android.support.design.widget.TextInputLayout>
 
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_description"
                 android:layout_width="match_parent"
-                app:errorEnabled="true"
                 android:layout_height="wrap_content">
-
 
                 <EditText
                     android:id="@+id/et_todo_descripiton"
@@ -77,14 +74,30 @@
                 android:paddingRight="@dimen/common_padding"
                 android:text="12:00" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/common_padding"
+                android:paddingRight="@dimen/common_padding"
+                android:text="Importance"
+                android:textSize="@dimen/sp_title" />
+
+            <SeekBar
+                android:id="@+id/sb_importance"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:max="5"
+                android:progress="3" />
+
             <Button
                 android:id="@+id/bt_add"
-                android:textSize="@dimen/sp_button"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp48"
                 android:background="@drawable/bg_primary"
                 android:text="Add"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_button" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

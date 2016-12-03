@@ -18,4 +18,5 @@
     <string name="your_token">Your Token</string>
     <string name="todo">Todo</string>
     <string name="add_todo">AddTodo</string>
+    <string name="search_title">Search</string>
 </resources>

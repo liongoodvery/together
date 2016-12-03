@@ -8,7 +8,7 @@ import dagger.Component;
 /**
  * Created by lion on 2016-11-17
  */
-@Component(dependencies = {GistModule.class})
+@Component(modules = GistModule.class)
 public interface GistComponent  {
     void inject(GistFragment fragment);
 }

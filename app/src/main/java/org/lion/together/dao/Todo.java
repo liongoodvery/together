@@ -4,6 +4,8 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+import javax.inject.Inject;
+
 /**
  * Created by lion on 2016-11-27
  */
@@ -18,6 +20,7 @@ public class Todo {
     public int importance;
     public String description;
 
+    @Inject
     public Todo() {
     }
 

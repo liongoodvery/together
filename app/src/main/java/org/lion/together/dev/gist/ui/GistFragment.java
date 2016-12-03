@@ -26,6 +26,7 @@ import org.lion.together.dev.gist.adapter.GistAdapter;
 import org.lion.together.dev.gist.model.Gist;
 import org.lion.together.dev.gist.presenter.GistPresenter;
 import org.lion.together.di.componets.DaggerGistComponent;
+import org.lion.together.di.componets.GistComponent;
 import org.lion.together.di.modules.GistModule;
 import org.lion.together.utils.FragmentUtils;
 
@@ -61,6 +62,7 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     private String mToken;
     private String mShowType;
     private boolean mNot_show_again;
+    private GistComponent mGistComponent;
 
     @Override
     protected int getMenuRes() {
@@ -147,9 +149,10 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
     @Override
     protected void inject() {
         super.inject();
-        DaggerGistComponent.builder()
+        mGistComponent = DaggerGistComponent.builder()
                 .gistModule(new GistModule(this))
-                .build()
+                .build();
+        mGistComponent
                 .inject(this);
     }
 
@@ -234,5 +237,15 @@ public class GistFragment extends BaseFragment implements GistView, View.OnClick
         GistDetailFragment fragment = new GistDetailFragment();
         fragment.setArguments(bundle);
         FragmentUtils.addToBackStack(getActivity(),fragment);
+    }
+
+    @Override
+    public GistComponent getComponent() {
+        return mGistComponent;
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getActivity();
     }
 }

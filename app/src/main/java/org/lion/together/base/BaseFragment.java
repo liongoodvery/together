@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.lion.together.App;
 import org.lion.together.R;
+import org.lion.together.di.componets.AppComponent;
 import org.lion.together.main.ui.MainView;
 
 import butterknife.BindView;
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    protected Toolbar mToolbar;
 
     protected View mRootView;  //该Fragment的根View
     protected boolean mShowed; //该Fragment是否显示过
@@ -43,7 +45,7 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
         if (null == mRootView) {
             mRootView = inflater.inflate(getContentLayout(), container, false);
             ButterKnife.bind(this, mRootView);
-            inject();
+            inject(App.getAppComponent());
             if (mToolbar != null) {
                 setToolBar();
                 if (getMenuRes() != 0) {
@@ -57,6 +59,10 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
         }
 
         return mRootView;
+    }
+
+    protected void inject(AppComponent appComponent) {
+
     }
 
     @MenuRes
@@ -109,7 +115,7 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
      * @return 返回true 则刷新数据
      */
     protected boolean shouldRefrsh() {
-        return false;
+        return true;
     }
 
     /**
@@ -158,4 +164,5 @@ public abstract class BaseFragment extends Fragment implements Toolbar.OnMenuIte
     public boolean onMenuItemClick(MenuItem item) {
         return false;
     }
+
 }

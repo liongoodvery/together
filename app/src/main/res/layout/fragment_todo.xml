@@ -19,14 +19,6 @@
             android:layout_height="match_parent"
             android:minHeight="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="@string/todo" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

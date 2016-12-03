@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Vibrator;
 
-import org.lion.together.dao.DaoSession;
 import org.lion.together.di.modules.AppModule;
 import org.lion.together.http.GistApi;
 
@@ -22,5 +21,4 @@ public interface AppComponent {
     Handler getHandler();
     Vibrator getVibrator();
     GistApi getGistApi();
-    DaoSession getTodoDaoSession();
 }

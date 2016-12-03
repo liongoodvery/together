@@ -5,10 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
 
-import org.greenrobot.greendao.database.Database;
-import org.lion.together.C;
-import org.lion.together.dao.DaoMaster;
-import org.lion.together.dao.DaoSession;
 import org.lion.together.dev.gist.GistC;
 import org.lion.together.http.GistApi;
 
@@ -59,14 +55,5 @@ public class AppModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()
                 .create(GistApi.class);
-    }
-
-
-    @Singleton
-    @Provides
-    public DaoSession provideTodoDaoSession() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mContext, C.TODO_DB);
-        Database db = helper.getWritableDb();
-        return new DaoMaster(db).newSession();
     }
 }

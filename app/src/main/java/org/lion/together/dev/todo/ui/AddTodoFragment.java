@@ -1,25 +1,31 @@
 package org.lion.together.dev.todo.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
-import org.lion.together.App;
 import org.lion.together.R;
 import org.lion.together.base.BaseFragment;
-import org.lion.together.base.BaseTextWatcher;
 import org.lion.together.dao.Todo;
+import org.lion.together.dev.todo.presenter.AddTodoPresenter;
+import org.lion.together.di.componets.AppComponent;
+import org.lion.together.di.componets.DaggerTodoComponent;
+import org.lion.together.di.componets.TodoComponent;
+import org.lion.together.di.modules.TodoModule;
+import org.lion.together.utils.ToastUtil;
 import org.lion.together.widget.DatePickerFragment;
 import org.lion.together.widget.TimePickerFragment;
 
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,8 +34,7 @@ import butterknife.OnClick;
  * Created by lion on 11/30/16.
  */
 
-public class AddTodoFragment extends BaseFragment implements DatePickerFragment.onDataSetListener, TimePickerFragment.OnTimeSetListener {
-
+public class AddTodoFragment extends BaseFragment implements DatePickerFragment.onDataSetListener, TimePickerFragment.OnTimeSetListener, AddTodoView<TodoComponent> {
 
     Calendar mCalendar;
     @BindView(R.id.toolbar_title)
@@ -53,6 +58,14 @@ public class AddTodoFragment extends BaseFragment implements DatePickerFragment.
     @BindView(R.id.til_description)
     TextInputLayout mTilDescription;
 
+    @BindView(R.id.sb_importance)
+    SeekBar mSbImportance;
+
+    @Inject
+    AddTodoPresenter mAddTodoPresenter;
+    private TodoComponent mTodoComponent;
+    private ProgressDialog mDialog;
+
     @Override
     protected void refreshData() {
 
@@ -65,29 +78,26 @@ public class AddTodoFragment extends BaseFragment implements DatePickerFragment.
 
     @Override
     public void setContentView() {
-        mEtTodoTitle.addTextChangedListener(new BaseTextWatcher(){
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()<3 || s.length()>10){
-                    mTilTitle.setError("length between 3 and 10");
-                }else {
-                    mTilTitle.setErrorEnabled(false);
-                }
-            }
-        });
+        mTvTodoDate.setText(String.format("%4d-%02d-%02d",
+                mCalendar.get(Calendar.YEAR),
+                mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH)));
+        mTvTodoTime.setText(String.format("%02d:%02d",
+                mCalendar.get(Calendar.HOUR_OF_DAY),
+                mCalendar.get(Calendar.MINUTE)));
+
     }
 
     @Override
     protected void initArguments(Bundle arguments) {
         mCalendar = Calendar.getInstance();
-
     }
 
 
     private void showTimePicker() {
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.setOnTimeSetListener(this);
-        fragment.show(getActivity().getSupportFragmentManager(),"timePicker");
+        fragment.show(getActivity().getSupportFragmentManager(), "timePicker");
     }
 
     private void showDataPicker() {
@@ -107,51 +117,88 @@ public class AddTodoFragment extends BaseFragment implements DatePickerFragment.
                 showTimePicker();
                 break;
             case R.id.bt_add:
-                saveTodo();
+                if (validate()) {
+                    saveTodo();
+                }
                 break;
         }
     }
 
-    private void validateDescription() {
-        String s = mTilDescription.getEditText().getText().toString();
-        if (s.length()>20){
-            mTilTitle.setError("description too long");
+    private boolean validate() {
+        int length = mEtTodoTitle.getText().length();
+        if (length < 3 && length > 10) {
+            ToastUtil.showToast(getActivity(), "title must between 3 and 10 characters");
+            return false;
         }
-    }
-
-    private void validateTitle() {
-
+        return true;
     }
 
     private void saveTodo() {
-        ProgressDialog dialog = ProgressDialog.show(getActivity(), "",
-                "Loading. Please wait...", true);
-        Todo todo =new Todo();
+        if (null == mDialog) {
+            mDialog = ProgressDialog.show(getActivity(), "",
+                    "Saving...", true);
+        }
+        mDialog.show();
+        Todo todo = getComponent().getTodo();
         todo.description = mEtTodoDescripiton.getText().toString();
-        todo.title=mEtTodoTitle.getText().toString();
+        todo.title = mEtTodoTitle.getText().toString();
         long currentTimeMillis = System.currentTimeMillis();
-        todo.createTime= currentTimeMillis;
-        todo.updateTime= currentTimeMillis;
-        todo.planDoTime=  mCalendar.getTimeInMillis();
-        App.getAppComponent().getTodoDaoSession().getTodoDao().insertOrReplace(todo);
+        todo.createTime = currentTimeMillis;
+        todo.updateTime = currentTimeMillis;
+        todo.planDoTime = mCalendar.getTimeInMillis();
+        todo.importance = mSbImportance.getProgress();
 
-        mEtTodoDescripiton.setText("");
-        mEtTodoTitle.setText("");
-        dialog.dismiss();
+        mAddTodoPresenter.saveTodo(todo);
     }
 
     @Override
     public void onDataSet(int year, int month, int day) {
         mCalendar.set(year, month, day);
-        mTvTodoDate.setText(String.format("%4d-%2d-%2d",year,month,day));
-        Logger.i("onDataSet called with" + "year = [" + year + "], month = [" + month + "], day = [" + day + "]");
+        mTvTodoDate.setText(String.format("%4d-%02d-%02d", year, month, day));
     }
 
     @Override
     public void OnTimeSet(int hourOfDay, int minute) {
-        Logger.i("OnTimeSet called with" + "hourOfDay = [" + hourOfDay + "], minute = [" + minute + "]");
-        mCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-        mCalendar.set(Calendar.MINUTE,minute);
-        mTvTodoTime.setText(String.format("%2d:%2d",hourOfDay,minute));
+        mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        mCalendar.set(Calendar.MINUTE, minute);
+        mTvTodoTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+    }
+
+    @Override
+    protected void inject(AppComponent appComponent) {
+        if (null == mTodoComponent) {
+            mTodoComponent = DaggerTodoComponent.builder()
+                    .todoModule(new TodoModule(this))
+                    .appComponent(appComponent)
+                    .build();
+        }
+        mTodoComponent.inject(this);
+        super.inject(appComponent);
+    }
+
+
+    @Override
+    public TodoComponent getComponent() {
+        return mTodoComponent;
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getActivity();
+    }
+
+    @Override
+    public void onSaveFailed() {
+        ToastUtil.showToast(getActivity(), "Insert failed");
+        mDialog.dismiss();
+    }
+
+    @Override
+    public void onSaveSuccess(long insertId) {
+        ToastUtil.showToast(getViewContext(), "Insert success");
+        mEtTodoTitle.setText("");
+        mEtTodoDescripiton.setText("");
+        mEtTodoTitle.requestFocus();
+        mDialog.dismiss();
     }
 }
